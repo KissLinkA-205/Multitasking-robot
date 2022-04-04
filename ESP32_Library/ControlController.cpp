@@ -43,3 +43,36 @@ void ControlController::turnOnLED() {
 void ControlController::turnOffLED() {
     digitalWrite(LED_PIN, LOW);
 }
+
+String ControlController::getDirectionMovement(int x, int y) {
+    String result = STOP_MOVEMENT;
+
+    if (y > BASE_AXIS_VALUE + AXIS_INFELICITY) {
+        result = FORWARD_MOVEMENT;
+    } else if (y < BASE_AXIS_VALUE - AXIS_INFELICITY) {
+        result = BACK_MOVEMENT;
+    } else if (x > BASE_AXIS_VALUE + AXIS_INFELICITY) {
+        result = RIGHT_MOVEMENT;
+    } else if (x < BASE_AXIS_VALUE - AXIS_INFELICITY) {
+        result = LEFT_MOVEMENT;
+    }
+
+    return result;
+}
+
+int ControlController::getSpeed(int x, int y) {
+    String directionMovement = getDirectionMovement(x, y);
+    int result = 0;
+    if (directionMovement == BACK_MOVEMENT) {
+        result = (MIN - y) * 100 / MIN;
+    } else if (directionMovement == FORWARD_MOVEMENT) {
+        result = (y - BASE_AXIS_VALUE - AXIS_INFELICITY) * 100 /
+                 (MAX - BASE_AXIS_VALUE - AXIS_INFELICITY);
+    } else if (directionMovement == LEFT_MOVEMENT) {
+        result = (MIN - x) * 100 / MIN;
+    } else if (directionMovement == RIGHT_MOVEMENT) {
+        result = (x - BASE_AXIS_VALUE - AXIS_INFELICITY) * 100 /
+                 (MAX - BASE_AXIS_VALUE - AXIS_INFELICITY);
+    }
+    return result;
+}

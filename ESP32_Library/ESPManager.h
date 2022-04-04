@@ -6,7 +6,7 @@
 #define ESPMANAGER_H
 
 #include "ControlController.h"
-#include "DisplayMenu.h"
+#include "DisplayMenuControl.h"
 #include "Arduino.h"
 
 class ESPManager {
@@ -19,7 +19,7 @@ public:
 
 private:
     ControlController controller;
-    DisplayMenu display;
+    DisplayMenuControl menuControl;
 };
 
 
