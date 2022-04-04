@@ -6,12 +6,16 @@
 
 DisplayMenuControl::DisplayMenuControl() {
     currentPage = START_PAGE;
+    currentSettingsPosition = 0;
 
     Serial.println("DisplayMenuControl loaded");
     displayMenu.showStartPage();
 
 
     nextPageButton.setDebounce(50);
+    nextSittingButton.setDebounce(50);
+    previousSittingButton.setDebounce(50);
+    changeSittingButton.setDebounce(50);
 }
 
 DisplayMenuControl::~DisplayMenuControl() {
@@ -22,6 +26,21 @@ void DisplayMenuControl::execute() {
     nextPageButton.tick();
     if (nextPageButton.isPress()) {
         nextPage();
+    }
+
+    nextSittingButton.tick();
+    if (nextSittingButton.isPress()) {
+        nextSittingsPosition();
+    }
+
+    previousSittingButton.tick();
+    if (previousSittingButton.isPress()) {
+        previousSittingsPosition();
+    }
+
+    changeSittingButton.tick();
+    if (changeSittingButton.isPress() && currentPage == 4) {
+        changeSittings();
     }
 
     switch (currentPage) {
@@ -40,12 +59,13 @@ void DisplayMenuControl::execute() {
 
             break;
         case 4:
-            displayMenu.showSettingsPageInformation(soundSittings, vibroSittings);
+            displayMenu.showSettingsPageInformation(soundSittings, vibroSittings, currentSettingsPosition);
             break;
     }
 }
 
 void DisplayMenuControl::nextPage() {
+    currentSettingsPosition = 0;
     currentPage++;
     if (currentPage >= NUMBER_OF_PAGES) {
         currentPage = START_PAGE;
@@ -69,9 +89,40 @@ void DisplayMenuControl::nextPage() {
             break;
         case 4:
             displayMenu.showSettingsPage();
-            displayMenu.showSettingsPageInformation(soundSittings, vibroSittings);
+            displayMenu.showSettingsPageInformation(soundSittings, vibroSittings, currentSettingsPosition);
             break;
     }
+}
+
+void DisplayMenuControl::nextSittingsPosition() {
+    if (currentSettingsPosition < NUMBER_OF_SETTINGS - 1) {
+        currentSettingsPosition++;
+    }
+    if (currentPage == 4) {
+        displayMenu.showSettingsPageInformation(soundSittings, vibroSittings, currentSettingsPosition);
+    }
+}
+
+void DisplayMenuControl::previousSittingsPosition() {
+    if (currentSettingsPosition > 0) {
+        currentSettingsPosition--;
+    }
+    if (currentPage == 4) {
+        displayMenu.clearDisplay();
+        displayMenu.showSettingsPage();
+        displayMenu.showSettingsPageInformation(soundSittings, vibroSittings, currentSettingsPosition);
+    }
+}
+
+void DisplayMenuControl::changeSittings() {
+    if (currentSettingsPosition == 0) {
+        soundSittings = !soundSittings;
+    } else if (currentSettingsPosition == 1) {
+        vibroSittings = !vibroSittings;
+    }
+    displayMenu.clearDisplay();
+    displayMenu.showSettingsPage();
+    displayMenu.showSettingsPageInformation(soundSittings, vibroSittings, currentSettingsPosition);
 }
 
 bool DisplayMenuControl::getSoundSettings() {

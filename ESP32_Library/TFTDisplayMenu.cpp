@@ -88,14 +88,24 @@ void TFTDisplayMenu::showSettingsPage() {
     tft.println("vibro: ");
 }
 
-void TFTDisplayMenu::showSettingsPageInformation(bool sound, bool vibro) {
+void TFTDisplayMenu::showSettingsPageInformation(bool sound, bool vibro, int sittingsPosition) {
     tft.setCursor(42, 32, 2);
+    if (sittingsPosition == 0) {
+        tft.setTextColor(TFT_WHITE, 0x5AEB);
+    } else {
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    }
     if (sound) {
         tft.println("on ");
     } else {
         tft.println("off");
     }
 
+    if (sittingsPosition == 1) {
+        tft.setTextColor(TFT_WHITE, 0x5AEB);
+    } else {
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    }
     tft.setCursor(42, 48, 2);
     if (vibro) {
         tft.println("on ");

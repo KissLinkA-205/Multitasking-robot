@@ -24,7 +24,7 @@ void ESPManager::handle() {
     int cameraY = controller.getYPositionFromCameraMovement();
     String direction = controller.getDirectionMovement(movementX, movementY);
     int speed = controller.getSpeed(movementX, movementY);
-
+    
     menuControl.updateMenuInformation(movementX, movementY, cameraX, cameraY, direction, speed);
     menuControl.execute();
 }

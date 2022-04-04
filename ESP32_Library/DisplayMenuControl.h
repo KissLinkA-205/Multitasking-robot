@@ -11,6 +11,8 @@
 #define NUMBER_OF_PAGES 5
 #define START_PAGE 0
 
+#define NUMBER_OF_SETTINGS 2
+
 class DisplayMenuControl {
 public:
     DisplayMenuControl();
@@ -18,8 +20,10 @@ public:
 
     void execute();
     void nextPage();
+    void nextSittingsPosition();
+    void previousSittingsPosition();
+    void changeSittings();
     void updateMenuInformation(int movementX, int movementY, int cameraX, int cameraY, String movementDirection, int movementSpeed);
-    void updateMenuSittings(bool soundSittings, bool vibroSittings);
 
     bool getSoundSettings();
     bool getVibroSettings();
@@ -27,6 +31,7 @@ public:
 private:
     TFTDisplayMenu displayMenu;
     int currentPage;
+    int currentSettingsPosition;
 
     int movementX;
     int movementY;
@@ -39,6 +44,9 @@ private:
     bool vibroSittings;
 
     GButton nextPageButton = GButton(12);
+    GButton nextSittingButton = GButton(14);
+    GButton previousSittingButton = GButton(27);
+    GButton changeSittingButton = GButton(13);
 };
 
 

@@ -28,7 +28,7 @@ public:
     void showVideoPage();
 
     void showSettingsPage();
-    void showSettingsPageInformation(bool sound, bool vibro);
+    void showSettingsPageInformation(bool sound, bool vibro, int sittingsPosition);
 
 private:
     TFT_eSPI tft = TFT_eSPI();
