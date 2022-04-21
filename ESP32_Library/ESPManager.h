@@ -1,12 +1,13 @@
 //
-// Created by iange on 03.04.2022.
+// Created by Anzhalika Dziarkach on 03.04.2022.
 //
 
 #ifndef ESPMANAGER_H
 #define ESPMANAGER_H
 
 #include "ControlController.h"
-#include "DisplayMenuControl.h"
+#include "DisplayMenuController.h"
+#include "WifiController.h"
 #include "Arduino.h"
 
 class ESPManager {
@@ -18,8 +19,9 @@ public:
     void handle();
 
 private:
-    ControlController controller;
-    DisplayMenuControl menuControl;
+    ControlController controlController;
+    DisplayMenuController displayMenuController;
+    WifiController wifiController;
 };
 
 

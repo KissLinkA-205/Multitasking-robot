@@ -1,5 +1,5 @@
 //
-// Created by iange on 03.04.2022.
+// Created by Anzhalika Dziarkach on 03.04.2022.
 //
 
 #ifndef CONTROLCONTROLLER_H
@@ -7,6 +7,11 @@
 
 #include "pch.h"
 #include "Arduino.h"
+
+#define BASE_AXIS_VALUE 1800
+#define AXIS_INFELICITY 350
+#define MIN_AXIS_VALUE 1500
+#define MAX_AXIS_VALUE 4100
 
 const char FORWARD_MOVEMENT_CODE = 'f';
 const char BACK_MOVEMENT_CODE = 'b';
@@ -20,9 +25,6 @@ const String RIGHT_MOVEMENT = "RIGHT";
 const String LEFT_MOVEMENT = "LEFT";
 const String STOP_MOVEMENT = "STOP";
 
-const int BASE_AXIS_VALUE = 1800;
-const int AXIS_INFELICITY = 350;
-
 class ControlController {
 public:
     ControlController();
@@ -31,10 +33,19 @@ public:
     void turnOnLED();
     void turnOffLED();
 
-    int getXPositionFromMovement();
-    int getYPositionFromMovement();
-    int getXPositionFromCameraMovement();
-    int getYPositionFromCameraMovement();
+    void turnOnSound();
+    void turnOffSound();
+
+    void turnOnVibro();
+    void turnOffVibro();
+
+    int getXPositionFromMovementJoystick();
+    int getYPositionFromMovementJoystick();
+    bool isMovementButtonPressed();
+
+    int getXPositionFromCameraJoystick();
+    int getYPositionFromCameraJoystick();
+    bool isCameraButtonPressed();
 
     String getDirectionMovement(int x, int y);
     char getDirectionMovementCode(int x, int y);

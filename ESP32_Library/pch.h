@@ -1,21 +1,27 @@
 //
-// Created by iange on 03.04.2022.
+// Created by Anzhalika Dziarkach on 03.04.2022.
 //
 
 #ifndef PCH_H
 #define PCH_H
 
 #define LED_PIN 15
-#define motorchiki 25
-#define soundPin 26
-const int PIN_BUTTON = 12;
+#define VIBRO_PIN 21
+#define SOUND_PIN 12
+#define MICROPHONE_PIN 34
 
-#define MOVEMENT_X 33  // ось X джойстика, отвечающего за движение робота
-#define MOVEMENT_Y 32  // ось Y джойстика, отвечающего за движение робота
-#define CAMERA_X 35    // ось X джойстика, отвечающего за перемещение головы робота
-#define CAMERA_Y 34    // ось Y джойстика, отвечающего за перемещение головы робота
+#define MOVEMENT_JOYSTICK_X 32
+#define MOVEMENT_JOYSTICK_Y 35
+#define MOVEMENT_JOYSTICK_Z 19
 
-#define MIN 1500
-#define MAX 4100
+#define CAMERA_JOYSTICK_X 13
+#define CAMERA_JOYSTICK_Y 27
+#define CAMERA_JOYSTICK_Z 14
+
+#define NEXT_PAGE_BUTTON 22
+#define NEXT_SETTING_BUTTON 26
+#define CHANGE_SETTING_BUTTON 33
+#define PREVIOUS_SETTING_BUTTON 25
+
 
 #endif //PCH_H
