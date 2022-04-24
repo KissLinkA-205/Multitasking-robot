@@ -31,13 +31,15 @@ public:
 
     void nextPage();
     void showPage();
+    void showConnection();
 
     void nextSettingPosition();
     void previousSettingPosition();
 
     void changeSetting();
     void updateMenuInformation(int movementX, int movementY, bool movementZ, int cameraX, int cameraY,
-                               bool cameraZ, String movementDirection, int movementSpeed);
+                               bool cameraZ, String movementDirection, int movementSpeed, String cameraHorizontalDirection,
+                               String cameraVerticalDirection);
 
     bool getSoundSetting();
     bool getVibroSetting();
@@ -56,6 +58,9 @@ private:
 
     String movementDirection;
     int movementSpeed;
+
+    String cameraHorizontalDirection;
+    String cameraVerticalDirection;
 
     bool soundSetting;
     bool vibroSetting;

@@ -72,7 +72,7 @@ void ControlController::turnOffVibro() {
     digitalWrite(VIBRO_PIN, LOW);
 }
 
-String ControlController::getDirectionMovement(int x, int y) {
+String ControlController::getMovementDirection(int x, int y) {
     String result = STOP_MOVEMENT;
 
     if (y > BASE_AXIS_VALUE + AXIS_INFELICITY) {
@@ -88,8 +88,8 @@ String ControlController::getDirectionMovement(int x, int y) {
     return result;
 }
 
-int ControlController::getSpeed(int x, int y) {
-    String directionMovement = getDirectionMovement(x, y);
+int ControlController::getMovementSpeed(int x, int y) {
+    String directionMovement = getMovementDirection(x, y);
     int result = 0;
     if (directionMovement == BACK_MOVEMENT) {
         result = (MIN_AXIS_VALUE - y) * 100 / MIN_AXIS_VALUE;
@@ -102,5 +102,29 @@ int ControlController::getSpeed(int x, int y) {
         result = (x - BASE_AXIS_VALUE - AXIS_INFELICITY) * 100 /
                  (MAX_AXIS_VALUE - BASE_AXIS_VALUE - AXIS_INFELICITY);
     }
+    return result;
+}
+
+String ControlController::getCameraHorizontalDirection(int x, int y) {
+    String result = STOP_MOVEMENT;
+
+    if (x > BASE_AXIS_VALUE + AXIS_INFELICITY) {
+        result = RIGHT_MOVEMENT;
+    } else if (x < BASE_AXIS_VALUE - AXIS_INFELICITY) {
+        result = LEFT_MOVEMENT;
+    }
+
+    return result;
+}
+
+String ControlController::getCameraVerticalDirection(int x, int y) {
+    String result = STOP_MOVEMENT;
+
+    if (y > BASE_AXIS_VALUE + AXIS_INFELICITY) {
+        result = UP_MOVEMENT;
+    } else if (y < BASE_AXIS_VALUE - AXIS_INFELICITY) {
+        result = DOWN_MOVEMENT;
+    }
+
     return result;
 }

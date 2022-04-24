@@ -8,6 +8,8 @@
 #include <SPI.h>
 #include <TFT_eSPI.h>
 
+#define BLUE_COLOR 0x07FF
+
 class TFTDisplayMenu {
 public:
     TFTDisplayMenu();
@@ -15,7 +17,7 @@ public:
 
     void clearDisplay();
 
-    void showStartPage();
+    void showConnectionPage();
 
     void showInfoPage();
     void showInfoPageInformation();
@@ -24,7 +26,8 @@ public:
     void showMovementPageInformation(int x, int y, bool z, String direction, int speed);
 
     void showCameraMovementPage();
-    void showCameraMovementPageInformation(int x, int y, bool z);
+    void showCameraMovementPageInformation(int x, int y, bool z, String cameraHorizontalDirection,
+                                           String cameraVerticalDirection);
 
     void showVideoPage();
 

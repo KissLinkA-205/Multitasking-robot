@@ -12,8 +12,26 @@
 
 const char *ROBOT_SSID = "Multitasking_robot";
 const char *ROBOT_PASSWORD = "robot123";
-//const uint16_t ROBOT_PORT = 65432;
-//const char *ROBOT_IP = "192.168.1.23";
+const uint16_t ROBOT_PORT = 65432;
+const char *ROBOT_IP = "192.168.1.23";
+
+const String FORWARD_MOVEMENT = "FORWARD";
+const String BACK_MOVEMENT = "BACK";
+const String RIGHT_MOVEMENT = "RIGHT";
+const String LEFT_MOVEMENT = "LEFT";
+const String UP_MOVEMENT = "UP";
+const String DOWN_MOVEMENT = "DOWN";
+
+const String FORWARD_MOVEMENT_CODE = "f";
+const String BACK_MOVEMENT_CODE = "b";
+const String RIGHT_MOVEMENT_CODE = "r";
+const String LEFT_MOVEMENT_CODE = "l";
+const String STOP_MOVEMENT_CODE = "s";
+
+const String RIGHT_HORIZONTAL_CODE = "h85";
+const String LEFT_HORIZONTAL_CODE = "h5";
+const String UP_VERTICAL_CODE = "v40";
+const String DOWN_VERTICAL_CODE = "v5";
 
 class WifiController {
 public:
@@ -21,6 +39,15 @@ public:
     ~WifiController();
 
     void begin();
+
+    char readByte();
+    void send(char* information);
+
+    void sendMovementInformation(String directionMovement, int speed);
+    void sendCameraMovementInformation(String horizontalDirection, String verticalDirection);
+
+    bool isWifiConnectionAvailable();
+    bool isMessageToAccept();
 
 private:
     WiFiClient client;

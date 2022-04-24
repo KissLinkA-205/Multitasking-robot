@@ -18,23 +18,55 @@ void ESPManager::begin() {
     delay(500);
     controlController.turnOffSound();
 
+    displayMenuController.showConnection();
     wifiController.begin();
     displayMenuController.showPage();
 }
 
 void ESPManager::handle() {
-    int movementX = controlController.getXPositionFromMovementJoystick();
-    int movementY = controlController.getYPositionFromMovementJoystick();
-    bool movementZ = controlController.isMovementButtonPressed();
+    if (!wifiController.isWifiConnectionAvailable()) {
+        begin();
+    }
 
     int cameraX = controlController.getXPositionFromCameraJoystick();
     int cameraY = controlController.getYPositionFromCameraJoystick();
     bool cameraZ = controlController.isCameraButtonPressed();
 
-    String direction = controlController.getDirectionMovement(movementX, movementY);
-    int speed = controlController.getSpeed(movementX, movementY);
+    int movementX = controlController.getXPositionFromMovementJoystick();
+    int movementY = controlController.getYPositionFromMovementJoystick();
+    bool movementZ = controlController.isMovementButtonPressed();
 
-    displayMenuController.updateMenuInformation(movementX, movementY, movementZ, cameraX, cameraY, cameraZ, direction, speed);
+    String movementDirection = controlController.getMovementDirection(movementX, movementY);
+    int movementSpeed = controlController.getMovementSpeed(movementX, movementY);
+
+    String cameraHorizontalDirection = controlController.getCameraHorizontalDirection(cameraX, cameraY);
+    String cameraVerticalDirection = controlController.getCameraVerticalDirection(cameraX, cameraY);
+
+    wifiController.sendMovementInformation(movementDirection, movementSpeed);
+    wifiController.sendCameraMovementInformation(cameraHorizontalDirection, cameraVerticalDirection);
+
+    if (wifiController.isMessageToAccept()) {
+        char code = wifiController.readByte();
+        if (code == 's') {
+            if (displayMenuController.getSoundSetting()) {
+                controlController.turnOnSound();
+            } else {
+                controlController.turnOffSound();
+            }
+            if (displayMenuController.getVibroSetting()) {
+                controlController.turnOnVibro();
+            } else {
+                controlController.turnOffVibro();
+            }
+        } else {
+            controlController.turnOffSound();
+            controlController.turnOffVibro();
+        }
+    }
+
+    displayMenuController.updateMenuInformation(movementX, movementY, movementZ, cameraX, cameraY, cameraZ,
+                                                movementDirection,
+                                                movementSpeed, cameraHorizontalDirection, cameraVerticalDirection);
     displayMenuController.execute();
 }
 

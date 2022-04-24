@@ -7,7 +7,8 @@
 DisplayMenuController::DisplayMenuController() {
     currentPage = INFO_PAGE_POSITION;
     currentSettingPosition = SOUND_SETTING_POSITION;
-    displayMenu.showStartPage();
+    vibroSetting = true;
+    soundSetting = true;
 
     nextPageButton.setDebounce(BUTTON_DEBOUNCE);
     nextSettingButton.setDebounce(BUTTON_DEBOUNCE);
@@ -19,6 +20,10 @@ DisplayMenuController::DisplayMenuController() {
 
 DisplayMenuController::~DisplayMenuController() {
 
+}
+
+void DisplayMenuController::showConnection() {
+    displayMenu.showConnectionPage();
 }
 
 void DisplayMenuController::execute() {
@@ -50,7 +55,8 @@ void DisplayMenuController::execute() {
             break;
 
         case CAMERA_PAGE_POSITION:
-            displayMenu.showCameraMovementPageInformation(cameraX, cameraY, cameraButton);
+            displayMenu.showCameraMovementPageInformation(cameraX, cameraY, cameraButton, cameraHorizontalDirection,
+                                                          cameraVerticalDirection);
             break;
 
         case SETTINGS_PAGE_POSITION:
@@ -87,7 +93,8 @@ void DisplayMenuController::showPage() {
 
         case CAMERA_PAGE_POSITION:
             displayMenu.showCameraMovementPage();
-            displayMenu.showCameraMovementPageInformation(cameraX, cameraY, cameraButton);
+            displayMenu.showCameraMovementPageInformation(cameraX, cameraY, cameraButton, cameraHorizontalDirection,
+                                                          cameraVerticalDirection);
             break;
 
         case VIDEO_PAGE_POSITION:
@@ -151,7 +158,8 @@ bool DisplayMenuController::getVibroSetting() {
 
 void DisplayMenuController::updateMenuInformation(int movementX, int movementY, bool movementButton, int cameraX,
                                                   int cameraY, bool cameraButton, String movementDirection,
-                                                  int movementSpeed) {
+                                                  int movementSpeed, String cameraHorizontalDirection,
+                                                  String cameraVerticalDirection) {
     this->movementX = movementX;
     this->movementY = movementY;
     this->movementButton = movementButton;
@@ -160,4 +168,6 @@ void DisplayMenuController::updateMenuInformation(int movementX, int movementY, 
     this->cameraButton = cameraButton;
     this->movementDirection = movementDirection;
     this->movementSpeed = movementSpeed;
+    this->cameraHorizontalDirection = cameraHorizontalDirection;
+    this->cameraVerticalDirection = cameraVerticalDirection;
 }

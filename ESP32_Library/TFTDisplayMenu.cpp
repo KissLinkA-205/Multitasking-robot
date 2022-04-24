@@ -6,7 +6,7 @@
 
 TFTDisplayMenu::TFTDisplayMenu() {
     tft.init();
-    tft.setRotation(1);
+    tft.setRotation(3);
     clearDisplay();
 
     Serial.println("TFTDisplayMenu loaded");
@@ -22,27 +22,38 @@ void TFTDisplayMenu::clearDisplay() {
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
 }
 
-void TFTDisplayMenu::showStartPage() {
-    tft.println("          START\n");
+void TFTDisplayMenu::showConnectionPage() {
+    clearDisplay();
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.println("       CONNECTION\n");
+
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.println("Connection to the robot");
     tft.println("            ...");
 }
 
 void TFTDisplayMenu::showInfoPage() {
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
     tft.println("       INFORMATION\n");
 }
 
 void TFTDisplayMenu::showMovementPage() {
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
     tft.println("         MOVEMENT");
+
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.println("x: ");
     tft.println("y: ");
     tft.println("z: ");
+
+    tft.setTextColor(BLUE_COLOR, TFT_BLACK);
     tft.println("==========================");
     tft.println("direction: ");
     tft.println("speed: ");
 }
 
 void TFTDisplayMenu::showMovementPageInformation(int x, int y, bool z, String direction, int speed) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.setCursor(20, 16, 2);
     tft.print(x);
     tft.print("     ");
@@ -68,43 +79,65 @@ void TFTDisplayMenu::showMovementPageInformation(int x, int y, bool z, String di
 }
 
 void TFTDisplayMenu::showCameraMovementPage() {
-    tft.println("   CAMERA MOVEMENT\n");
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.println("   CAMERA MOVEMENT");
+
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.println("x: ");
     tft.println("y: ");
     tft.println("z: ");
+
+    tft.setTextColor(BLUE_COLOR, TFT_BLACK);
+    tft.println("==========================");
+    tft.println("horizontal: ");
+    tft.println("vertical: ");
 }
 
-void TFTDisplayMenu::showCameraMovementPageInformation(int x, int y, bool z) {
-    tft.setCursor(20, 32, 2);
+void TFTDisplayMenu::showCameraMovementPageInformation(int x, int y, bool z, String cameraHorizontalDirection,
+                                                       String cameraVerticalDirection) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setCursor(20, 16, 2);
     tft.print(x);
     tft.print("     ");
 
-    tft.setCursor(20, 48, 2);
+    tft.setCursor(20, 32, 2);
     tft.print(y);
     tft.print("     ");
 
-    tft.setCursor(20, 64, 2);
+    tft.setCursor(20, 48, 2);
     tft.print(z);
+    tft.print("     ");
+
+    tft.setCursor(74, 80, 2);
+    tft.print(cameraHorizontalDirection);
+    tft.print("     ");
+
+    tft.setCursor(60, 96, 2);
+    tft.print(cameraVerticalDirection);
     tft.print("     ");
 }
 
 void TFTDisplayMenu::showVideoPage() {
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
     tft.println("          VIDEO\n");
 }
 
 void TFTDisplayMenu::showSettingsPage() {
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
     tft.println("         SETTINGS\n");
 
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.println("sound: ");
     tft.println("vibro: ");
 }
 
 void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int settingsPosition) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.setCursor(42, 32, 2);
 
     switch (settingsPosition) {
         case 0:
-            tft.setTextColor(TFT_WHITE, 0x5AEB);
+            tft.setTextColor(TFT_BLACK, TFT_WHITE);
             if (isSound) {
                 tft.println("on ");
             } else {
@@ -129,7 +162,7 @@ void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int
                 tft.println("off");
             }
 
-            tft.setTextColor(TFT_WHITE, 0x5AEB);
+            tft.setTextColor(TFT_BLACK, TFT_WHITE);
             tft.setCursor(42, 48, 2);
             if (isVibro) {
                 tft.println("on ");
