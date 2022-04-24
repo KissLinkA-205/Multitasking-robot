@@ -28,10 +28,10 @@ const String RIGHT_MOVEMENT_CODE = "r";
 const String LEFT_MOVEMENT_CODE = "l";
 const String STOP_MOVEMENT_CODE = "s";
 
-const String RIGHT_HORIZONTAL_CODE = "h85";
-const String LEFT_HORIZONTAL_CODE = "h5";
-const String UP_VERTICAL_CODE = "v40";
-const String DOWN_VERTICAL_CODE = "v5";
+const char* RIGHT_HORIZONTAL_CODE = "h85";
+const char* LEFT_HORIZONTAL_CODE = "h5";
+const char* UP_VERTICAL_CODE = "v40";
+const char* DOWN_VERTICAL_CODE = "v5";
 
 class WifiController {
 public:
