@@ -25,6 +25,8 @@ void ESPManager::begin() {
 
 void ESPManager::handle() {
     if (!wifiController.isWifiConnectionAvailable()) {
+        controlController.turnOffSound();
+        controlController.turnOffVibro();
         begin();
     }
 
