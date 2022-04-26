@@ -2,8 +2,8 @@
 // Created by Anzhalika Dziarkach on 03.04.2022.
 //
 
-#ifndef ESPMANAGER_H
-#define ESPMANAGER_H
+#ifndef ESP_MANAGER_H
+#define ESP_MANAGER_H
 
 #include "ControlController.h"
 #include "DisplayMenuController.h"
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif //ESPMANAGER_H
+#endif //ESP_MANAGER_H

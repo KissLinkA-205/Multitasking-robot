@@ -38,7 +38,6 @@ void WifiController::begin() {
         delay(500);
     }
 
-
     Serial.println("Connected to the robot successfully");
     digitalWrite(LED_PIN, HIGH);
 }

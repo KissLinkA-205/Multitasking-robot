@@ -7,7 +7,6 @@
 DisplayMenuController::DisplayMenuController() {
     currentPage = INFO_PAGE_POSITION;
     currentSettingPosition = SOUND_SETTING_POSITION;
-    vibroSetting = true;
     soundSetting = true;
 
     nextPageButton.setDebounce(BUTTON_DEBOUNCE);
@@ -27,6 +26,11 @@ void DisplayMenuController::showConnection() {
 }
 
 void DisplayMenuController::execute() {
+    EEPROM.begin(EEPROM_SIZE);
+    EEPROM.get(SOUND_EEPROM_POSITION, soundSetting);
+    EEPROM.get(VIBRO_EEPROM_POSITION, vibroSetting);
+    EEPROM.get(INVERSION_EEPROM_POSITION, controlInversionSetting);
+
     nextPageButton.tick();
     if (nextPageButton.isPress()) {
         nextPage();
@@ -45,7 +49,13 @@ void DisplayMenuController::execute() {
     changeSettingButton.tick();
     if (changeSettingButton.isPress() && currentPage == SETTINGS_PAGE_POSITION) {
         changeSetting();
+
+        EEPROM.put(SOUND_EEPROM_POSITION, soundSetting);
+        EEPROM.put(VIBRO_EEPROM_POSITION, vibroSetting);
+        EEPROM.put(INVERSION_EEPROM_POSITION, controlInversionSetting);
+        EEPROM.commit();
     }
+    EEPROM.end();
 
     switch (currentPage) {
         case MOVEMENT_PAGE_POSITION:
@@ -60,7 +70,8 @@ void DisplayMenuController::execute() {
             break;
 
         case SETTINGS_PAGE_POSITION:
-            displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, currentSettingPosition);
+            displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, controlInversionSetting,
+                                                    currentSettingPosition);
             break;
 
         default:
@@ -103,7 +114,8 @@ void DisplayMenuController::showPage() {
 
         case SETTINGS_PAGE_POSITION:
             displayMenu.showSettingsPage();
-            displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, currentSettingPosition);
+            displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, controlInversionSetting,
+                                                    currentSettingPosition);
             break;
 
         default:
@@ -116,7 +128,8 @@ void DisplayMenuController::nextSettingPosition() {
         currentSettingPosition++;
     }
     if (currentPage == SETTINGS_PAGE_POSITION) {
-        displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, currentSettingPosition);
+        displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, controlInversionSetting,
+                                                currentSettingPosition);
     }
 }
 
@@ -127,7 +140,8 @@ void DisplayMenuController::previousSettingPosition() {
     if (currentPage == SETTINGS_PAGE_POSITION) {
         displayMenu.clearDisplay();
         displayMenu.showSettingsPage();
-        displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, currentSettingPosition);
+        displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, controlInversionSetting,
+                                                currentSettingPosition);
     }
 }
 
@@ -136,16 +150,33 @@ void DisplayMenuController::changeSetting() {
         case SOUND_SETTING_POSITION:
             soundSetting = !soundSetting;
             break;
+
         case VIBRO_SETTING_POSITION:
             vibroSetting = !vibroSetting;
             break;
-        default:
+
+        case CONTROL_INVERSION_POSITION:
+            controlInversionSetting = !controlInversionSetting;
             break;
+
+        case START_TEST_POSITION:
+            displayMenu.showTestPage();
+            ControlController controller;
+            controller.turnOnSound();
+            delay(500);
+            controller.turnOffSound();
+            delay(500);
+            controller.turnOnVibro();
+            delay(500);
+            controller.turnOffVibro();
+            break;
+
     }
 
     displayMenu.clearDisplay();
     displayMenu.showSettingsPage();
-    displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, currentSettingPosition);
+    displayMenu.showSettingsPageInformation(soundSetting, vibroSetting, controlInversionSetting,
+                                            currentSettingPosition);
 }
 
 bool DisplayMenuController::getSoundSetting() {
@@ -154,6 +185,10 @@ bool DisplayMenuController::getSoundSetting() {
 
 bool DisplayMenuController::getVibroSetting() {
     return vibroSetting;
+}
+
+bool DisplayMenuController::getControlInversionSetting() {
+    return controlInversionSetting;
 }
 
 void DisplayMenuController::updateMenuInformation(int movementX, int movementY, bool movementButton, int cameraX,

@@ -6,7 +6,7 @@
 
 TFTDisplayMenu::TFTDisplayMenu() {
     tft.init();
-    tft.setRotation(3);
+    tft.setRotation(DISPLAY_ROTATION);
     clearDisplay();
 
     Serial.println("TFTDisplayMenu loaded");
@@ -129,9 +129,10 @@ void TFTDisplayMenu::showSettingsPage() {
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.println("sound: ");
     tft.println("vibro: ");
+    tft.println("inversion: ");
 }
 
-void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int settingsPosition) {
+void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, bool isInversion, int settingsPosition) {
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.setCursor(42, 32, 2);
 
@@ -152,6 +153,16 @@ void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int
                 tft.println("off");
             }
 
+            tft.setCursor(64, 64, 2);
+            if (isInversion) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(52, 80, 2);
+            tft.println("start test");
+
             break;
 
         case 1:
@@ -170,7 +181,73 @@ void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int
                 tft.println("off");
             }
 
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setCursor(64, 64, 2);
+            if (isInversion) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(52, 80, 2);
+            tft.println("start test");
+
             break;
+        case 2:
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            if (isSound) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(42, 48, 2);
+            if (isVibro) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setTextColor(TFT_BLACK, TFT_WHITE);
+            tft.setCursor(64, 64, 2);
+            if (isInversion) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setCursor(52, 80, 2);
+            tft.println("start test");
+            break;
+
+        case 3:
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            if (isSound) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(42, 48, 2);
+            if (isVibro) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(64, 64, 2);
+            if (isInversion) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setTextColor(TFT_BLACK, TFT_WHITE);
+            tft.setCursor(52, 80, 2);
+            tft.println("start test");
+            break;
+
         default:
             tft.setTextColor(TFT_WHITE, TFT_BLACK);
             if (isSound) {
@@ -185,6 +262,25 @@ void TFTDisplayMenu::showSettingsPageInformation(bool isSound, bool isVibro, int
             } else {
                 tft.println("off");
             }
+
+            tft.setCursor(64, 64, 2);
+            if (isInversion) {
+                tft.println("on ");
+            } else {
+                tft.println("off");
+            }
+
+            tft.setCursor(52, 80, 2);
+            tft.println("start test");
             break;
     }
+}
+
+void TFTDisplayMenu::showTestPage() {
+    clearDisplay();
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.println("          TEST\n");
+
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.println("Test is running ...");
 }

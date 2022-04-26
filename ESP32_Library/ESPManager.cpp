@@ -14,7 +14,9 @@ ESPManager::~ESPManager() {
 }
 
 void ESPManager::begin() {
-    controlController.turnOnSound();
+    if (displayMenuController.getSoundSetting()) {
+        controlController.turnOnSound();
+    }
     delay(500);
     controlController.turnOffSound();
 
@@ -30,13 +32,26 @@ void ESPManager::handle() {
         begin();
     }
 
-    int cameraX = controlController.getXPositionFromCameraJoystick();
-    int cameraY = controlController.getYPositionFromCameraJoystick();
-    bool cameraZ = controlController.isCameraButtonPressed();
+    int cameraX, cameraY, cameraZ;
+    int movementX, movementY, movementZ;
 
-    int movementX = controlController.getXPositionFromMovementJoystick();
-    int movementY = controlController.getYPositionFromMovementJoystick();
-    bool movementZ = controlController.isMovementButtonPressed();
+    if (displayMenuController.getControlInversionSetting()) {
+        cameraX = controlController.getXPositionFromMovementJoystick();
+        cameraY = controlController.getYPositionFromMovementJoystick();
+        cameraZ = controlController.isMovementButtonPressed();
+
+        movementX = controlController.getXPositionFromCameraJoystick();
+        movementY = controlController.getYPositionFromCameraJoystick();
+        movementZ = controlController.isCameraButtonPressed();
+    } else {
+        cameraX = controlController.getXPositionFromCameraJoystick();
+        cameraY = controlController.getYPositionFromCameraJoystick();
+        cameraZ = controlController.isCameraButtonPressed();
+
+        movementX = controlController.getXPositionFromMovementJoystick();
+        movementY = controlController.getYPositionFromMovementJoystick();
+        movementZ = controlController.isMovementButtonPressed();
+    }
 
     String movementDirection = controlController.getMovementDirection(movementX, movementY);
     int movementSpeed = controlController.getMovementSpeed(movementX, movementY);

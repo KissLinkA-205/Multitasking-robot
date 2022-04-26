@@ -2,13 +2,14 @@
 // Created by Anzhalika Dziarkach on 04.04.2022.
 //
 
-#ifndef TFTDISPLAYMENU_H
-#define TFTDISPLAYMENU_H
+#ifndef TFT_DISPLAY_MENU_H
+#define TFT_DISPLAY_MENU_H
 
 #include <SPI.h>
 #include <TFT_eSPI.h>
 
 #define BLUE_COLOR 0x07FF
+#define DISPLAY_ROTATION 3
 
 class TFTDisplayMenu {
 public:
@@ -32,11 +33,13 @@ public:
     void showVideoPage();
 
     void showSettingsPage();
-    void showSettingsPageInformation(bool isSound, bool isVibro, int settingsPosition);
+    void showSettingsPageInformation(bool isSound, bool isVibro, bool isInversion, int settingsPosition);
+
+    void showTestPage();
 
 private:
     TFT_eSPI tft = TFT_eSPI();
 };
 
 
-#endif //TFTDISPLAYMENU_H
+#endif //TFT_DISPLAY_MENU_H
